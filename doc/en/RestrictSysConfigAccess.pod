@@ -1,0 +1,53 @@
+=head1 NAME
+
+RestrictSysConfigAccess - hide some Group/SubGroup combinations
+
+=head1 DESCRIPTION
+
+This addon is useful for demo systems as you can hide some parts of the SysConfig.
+Currently that means that nobody can access the Group/SubGroup combination
+(e.g. Group Framework and SubGroup Core::Sendmail).
+
+After installation you have to define in I<Kernel/Config.pm> which parts
+should be hidden:
+
+    $Self->{'RestrictSysConfig::Rules'} = [
+        {
+            Group    => 'Framework',
+            SubGroup => 'Core::Sendmail',
+        },
+        {
+            Group    => 'Ticket',
+            SubGroup => 'Core::Ticket',
+        },
+    ];
+
+These rules hide the sendmail settings and the core ticket settings.
+
+If a user wants to access those settings he/she is getting a "no permission"
+screen.
+
+Possible enhancements:
+
+=over 4
+
+=item * hide SysConfig for specific groups
+
+=item * make SysConfig options "readonly"
+
+=item * allow wildcards
+
+=back
+
+If you are interested in those enhancements and want to sponsor them,
+please contact me.
+
+=head1 AUTHOR AND LICENSE
+
+This package was written by Renee Baecker E<lt>otrs@perl-services.deE<gt>.
+
+The package is licensed unter AGPL. If you
+did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
+
+=cut
+
