@@ -35,13 +35,15 @@ sub Run {
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
-    my $Action   = $ParamObject->GetParam( Param => 'Action' );
-    my $Group    = $ParamObject->GetParam( Param => 'SysConfigGroup' );
-    my $Subgroup = $ParamObject->GetParam( Param => 'SysConfigSubGroup' );
+    my $Action   = $ParamObject->GetParam( Param => 'Action' )            || '';
+    my $Group    = $ParamObject->GetParam( Param => 'SysConfigGroup' )    || '';
+    my $Subgroup = $ParamObject->GetParam( Param => 'SysConfigSubGroup' ) || '';
 
-    return 1 if !$Action || $Action ne 'AdminSysConfig';
+    return 1 if $Action ne 'AdminSysConfig';
 
     my $Rules    = $ConfigObject->Get('RestrictSysConfig::Rules') || [];
+
+    return 1 if !@{$Rules};
 
     my (@GroupRules) = grep{ $_->{Group} eq $Group }@{$Rules};
 
